@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  mqtt:
+    image: eclipse-mosquitto
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  rabbitmq:
+    image: rabbitmq:alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin123
+
+  events-service:
+    image: denoland/deno:alpine
+    depends_on:
+      - mqtt
+      - redis
+      - rabbitmq
+    command: task dev
+    working_dir: /home/deno
+    volumes:
+      - ../:/home/deno/:ro

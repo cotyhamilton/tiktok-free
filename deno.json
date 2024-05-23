@@ -1,0 +1,9 @@
+{
+  "tasks": {
+    "dev": "sleep 5; deno run -A --watch ./event-driven-events-system/mod.ts",
+    "build": "deno eval '(async function(){try{build}catch(e){console.error(e);throw(e)}})()'"
+  },
+  "imports": {
+    "@std/dotenv": "jsr:@std/dotenv@^0.223.0"
+  }
+}
